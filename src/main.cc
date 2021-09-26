@@ -11,12 +11,16 @@
 
 int main(){
   sf::RenderWindow window(sf::VideoMode(800, 1000), "SFML works!");
-  InitPlatform();
-/*  
+ 
   sf::RectangleShape rectangle(sf::Vector2f (150, 150));
   rectangle.setFillColor(sf::Color::Green);
-//  rectangle.setPosition(0, 0);
-*/
+ rectangle.setPosition(0, 0);
+
+PlatformClass platform();
+GameInfo game;
+BallClass ball;
+BrickListClass *brick_list = NULL;
+
   while (window.isOpen()){
     sf::Event event;
     while (window.pollEvent(event)){
@@ -24,14 +28,17 @@ int main(){
         window.close();
       }
 
-      MovePlatform();
       window.clear();
+      // ------------------------
 
-      DrawPlatform();
-//      window.draw(rectangle);
+      // window.draw(rectangle);
+
+      // -------------------------
       window.display();
     }
+
   }
+
   return 0;
 }
 
