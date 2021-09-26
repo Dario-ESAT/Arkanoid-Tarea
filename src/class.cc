@@ -6,27 +6,11 @@
 #include <SFML/Graphics.hpp>
 
 class EntityClass{
-  private:
-  sf::Vector2i position;
-  sf::Vector2i dimensions;
+  protected:
   float id;
   bool alive;
 
   public:
-  sf::Vector2i getPosition() {
-  return this->position;
-  }
-  void setPosition(sf::Vector2i position) {
-  this->position = position;
-  }
-
-  sf::Vector2i getDimensions() {
-  	return this->dimensions;
-  }
-  void setDimensions(sf::Vector2i dimensions) {
-  	this->dimensions = dimensions;
-  }
-
   float getId() {
   	return this->id;
   }
@@ -57,6 +41,8 @@ class BrickClass : public EntityClass{
   
 };
 
+
+// Hacer class del nodo y de la lista 
 class BrickListClass : public BrickClass{
 
   public:
@@ -78,33 +64,41 @@ class PlatformClass : public EntityClass{
   private:
   sf::RectangleShape shape;
   float speed;
+  sf::Vector2i direction;
 
   public:
-  PlatformClass(sf::Vector2i dimensions, sf::Vector2i position, float speed, bool alive, int id){
+  PlatformClass(sf::Vector2f size, sf::Vector2f position, sf::Vector2i direction, float speed, bool alive, int id){
 
-    this->setPosition(position);
-    this->setDimensions(dimensions);
-    this->setAlive(alive);
-    this->setSpeed(speed);
-    this->setId(id);
+    this->shape.setPosition(position);
+    this->shape.setSize(size);
+    this->alive = alive;
+    this->speed = speed;
+    this->direction = direction;
+    this->id = id;
     
   };
-
   sf::RectangleShape getShape() {
-  	return this->shape;
+    return this->shape;
   }
   void setShape(sf::RectangleShape shape) {
-  	this->shape = shape;
+    this->shape = shape;
   }
+
 
   float getSpeed() {
-  	return this->speed;
+    return this->speed;
   }
   void setSpeed(float speed) {
-  	this->speed = speed;
+    this->speed = speed;
   }
 
 
+  sf::Vector2i getDirection() {
+    return this->direction;
+  }
+  void setDirection(sf::Vector2i direction) {
+    this->direction = direction;
+  }
 
   void MovePlatform(){
 

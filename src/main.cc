@@ -14,8 +14,8 @@ int main(){
  
   sf::RectangleShape rectangle(sf::Vector2f (150, 150));
   rectangle.setFillColor(sf::Color::Green);
- rectangle.setPosition(0, 0);
-
+  rectangle.setPosition(0, 0);
+  sf::CircleShape circle(100.0f);
 PlatformClass platform();
 GameInfo game;
 BallClass ball;
