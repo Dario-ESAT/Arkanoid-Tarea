@@ -1,3 +1,6 @@
+#ifndef __COLLISIONS__
+#define __COLLISIONS__
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,14 +10,14 @@
 
 class EntityClass{
   protected:
-  float id;
+  int id;
   bool alive;
 
   public:
-  float getId() {
+  int getId() {
   	return this->id;
   }
-  void setId(float id) {
+  void setId(int id) {
   	this->id = id;
   }
 
@@ -24,31 +27,69 @@ class EntityClass{
   void setAlive(bool alive) {
   	this->alive = alive;
   }
-
-//  EntityClass(sf::Vector2i, sf::Vector2i, float, bool);
-  
 };
 
 class BrickClass : public EntityClass{
-
-  public:
-
-//  EntityClass brick_entity( (0, 0), (72, 30), 3, true);
-
-  BrickClass(sf::Vector2i, sf::Vector2i, float, bool);
-
+  
+   protected:
   sf::RectangleShape shape;
+
+   public:
+  BrickClass(sf::RectangleShape shape, int id, bool alive) {
+    
+    this->id = id;
+    this->alive = alive;
+    this->shape = shape;
+  };
+  
+  sf::RectangleShape getShape() {
+    return this->shape;
+  }
+  void setShape(sf::RectangleShape shape) {
+    this->shape = shape;
+  }
+
   
 };
 
+class BrickNode {
+  public:
+    BrickClass data;
+    BrickNode* next;
 
-// Hacer class del nodo y de la lista 
-class BrickListClass : public BrickClass{
+    BrickNode(BrickClass data){
+      this->data = data;
+      this->next = nullptr;
+    }
+};
+
+class BrickListClass{
+  private:
+  BrickNode* head;
 
   public:
-  BrickClass brick;
-  BrickListClass *next_brick = NULL;
+  BrickListClass() {
+    head = NULL;
+  }
+  ~BrickListClass() {};
 
+  void addBrick(int val) {
+    BrickNode* newnode = new BrickNode();
+    
+    newnode->data = val;
+    newnode->next = NULL;
+    if (head == NULL) {
+        head = newnode;
+    }
+    else {
+
+      BrickNode* temp = head;
+      while (temp->next != NULL) { 
+          temp = temp->next; // go to end of list
+      }
+      temp->next = newnode; // linking to newnode
+    }
+  };
 };
 
 class BallClass : public EntityClass{
@@ -61,22 +102,22 @@ class BallClass : public EntityClass{
 
 class PlatformClass : public EntityClass{
 
-  private:
+   private:
   sf::RectangleShape shape;
   float speed;
   sf::Vector2i direction;
 
-  public:
-  PlatformClass(sf::Vector2f size, sf::Vector2f position, sf::Vector2i direction, float speed, bool alive, int id){
+   public:
+  PlatformClass(sf::RectangleShape shape, int id, float speed, sf::Vector2i direction = sf::Vector2i(0,0), bool alive = true){
 
-    this->shape.setPosition(position);
-    this->shape.setSize(size);
+    this->shape = shape;
     this->alive = alive;
     this->speed = speed;
     this->direction = direction;
     this->id = id;
     
   };
+
   sf::RectangleShape getShape() {
     return this->shape;
   }
@@ -84,14 +125,12 @@ class PlatformClass : public EntityClass{
     this->shape = shape;
   }
 
-
   float getSpeed() {
     return this->speed;
   }
   void setSpeed(float speed) {
     this->speed = speed;
   }
-
 
   sf::Vector2i getDirection() {
     return this->direction;
@@ -101,17 +140,35 @@ class PlatformClass : public EntityClass{
   }
 
   void MovePlatform(){
+    
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 
+      this->direction = sf::Vector2i(-1, 0);
+    } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 
-  //  platform.shape.setPosition(sf::Vector2i (platform.position));
+      this->direction = sf::Vector2i(0, 0);
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+
+      this->direction = sf::Vector2i(1, 0);
+    } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+      
+      this->direction = sf::Vector2i(0, 0);
+    }
+
+    sf::Vector2f offset = sf::Vector2f(this->direction.x * this->speed, 0.0f);
+    this->shape.move(offset);
   }
 
-  void DrawPlatform(){
-    // window.draw(platform.shape);
+  void DrawPlatform(sf::RenderWindow *window){
+    window->draw(this->shape);
   }
 
 };
 
-struct GameInfo{
+class GameInfo{
   int lives, score;
 };
+
+#endif
