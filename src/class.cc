@@ -162,7 +162,7 @@ class PlatformClass : public EntityClass{
       this->direction = sf::Vector2i(0, 0);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->getShape().getPosition().x < 820) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->getShape().getPosition().x < 720) {
 
       this->direction = sf::Vector2i(1, 0);
     } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {

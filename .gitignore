@@ -31,5 +31,6 @@
 *.out
 *.app
 
+# Tonterías
 *.pdb
 *.ilk
