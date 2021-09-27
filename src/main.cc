@@ -10,7 +10,7 @@
 
 int main(){
   sf::RenderWindow window(sf::VideoMode(800, 900), "SFML works!");
-  window.setFramerateLimit(24);
+  window.setFramerateLimit(30);
 
   sf::RectangleShape rectangle(sf::Vector2f (150, 150));
   rectangle.setFillColor(sf::Color::Green);
@@ -27,7 +27,7 @@ int main(){
   while (window.isOpen()){
     sf::Event event;
     while (window.pollEvent(event)){
-      if (event.type == sf::Event::Closed){
+      if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
         window.close();
       }
 

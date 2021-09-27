@@ -35,13 +35,15 @@ class BrickClass : public EntityClass{
   sf::RectangleShape shape;
 
    public:
-  BrickClass(sf::RectangleShape shape, int id, bool alive) {
+  BrickClass(sf::RectangleShape shape, int id, bool alive = true) {
     
     this->id = id;
     this->alive = alive;
     this->shape = shape;
-  };
-  
+  }
+
+  BrickClass(){}
+
   sf::RectangleShape getShape() {
     return this->shape;
   }
@@ -73,23 +75,31 @@ class BrickListClass{
   }
   ~BrickListClass() {};
 
-  void addBrick(int val) {
-    BrickNode* newnode = new BrickNode();
+  void addBrick(BrickClass data) {
+    BrickNode* newnode = (BrickNode*) malloc(sizeof(BrickNode));
     
-    newnode->data = val;
-    newnode->next = NULL;
-    if (head == NULL) {
-        head = newnode;
-    }
-    else {
+    newnode->data = data;
+    newnode->next = head;
 
-      BrickNode* temp = head;
-      while (temp->next != NULL) { 
-          temp = temp->next; // go to end of list
-      }
-      temp->next = newnode; // linking to newnode
-    }
+    head = newnode;
+
   };
+
+  void printBricks(sf::RenderWindow *window){
+    for (BrickNode* current = head; current != nullptr; current = current->next) {
+      
+      window->draw(current->data.getShape());
+    }
+  }
+  
+  void printBricksAlive(sf::RenderWindow *window){
+    for (BrickNode* current = head; current != nullptr; current = current->next) {
+      if (current->data.getAlive()){
+        window->draw(current->data.getShape());
+
+      }
+    }
+  }
 };
 
 class BallClass : public EntityClass{
