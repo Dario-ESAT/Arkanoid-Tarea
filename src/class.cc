@@ -41,7 +41,6 @@ class BrickClass : public EntityClass{
     this->alive = alive;
     this->shape = shape;
   }
-
   BrickClass(){}
 
   sf::RectangleShape getShape() {
@@ -127,10 +126,11 @@ class PlatformClass : public EntityClass{
     this->id = id;
     
   };
-
+#pragma region s-getter
   sf::RectangleShape getShape() {
     return this->shape;
   }
+ 
   void setShape(sf::RectangleShape shape) {
     this->shape = shape;
   }
@@ -138,6 +138,7 @@ class PlatformClass : public EntityClass{
   float getSpeed() {
     return this->speed;
   }
+  
   void setSpeed(float speed) {
     this->speed = speed;
   }
@@ -145,13 +146,15 @@ class PlatformClass : public EntityClass{
   sf::Vector2i getDirection() {
     return this->direction;
   }
+  
   void setDirection(sf::Vector2i direction) {
     this->direction = direction;
   }
-
+#pragma endregion
+  
   void MovePlatform(){
     
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->getShape().getPosition().x > 0) {
 
       this->direction = sf::Vector2i(-1, 0);
     } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -159,7 +162,7 @@ class PlatformClass : public EntityClass{
       this->direction = sf::Vector2i(0, 0);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->getShape().getPosition().x < 820) {
 
       this->direction = sf::Vector2i(1, 0);
     } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -173,6 +176,7 @@ class PlatformClass : public EntityClass{
 
   void DrawPlatform(sf::RenderWindow *window){
     window->draw(this->shape);
+
   }
 
 };
