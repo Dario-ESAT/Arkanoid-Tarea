@@ -115,7 +115,9 @@ class Game{
           player.getShape().getPosition().x + player.getShape().getSize().x,player.getShape().getPosition().y + player.getShape().getSize().y};
      
     if (Collision(h_platform,h_ball_raycast)) {
-      ball.setDirection(sf::Vector2i(player.getDirection().x, -1));
+      if (player.getDirection().x != 0) {
+        ball.setDirection(sf::Vector2i(player.getDirection().x, -1));
+      }
     }
   }
 
@@ -123,6 +125,7 @@ class Game{
     initPLatform();
     initBall();
   }
+ 
   void RestartLvL(){
     RestartPLayer();
     buildBricks();
