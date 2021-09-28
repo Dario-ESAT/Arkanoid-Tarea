@@ -45,19 +45,16 @@ class BallClass : public EntityClass{
   	this->speed = speed;
   }
   void CheckBoundaries(){
-    if(this->shape.getPosition().x <= 0){
-      this->direction.x = 1;
-    }
-    
-    if(this->shape.getPosition().x >= kScreenWidth){
-      this->direction.x = -1;
+    if(this->shape.getPosition().x <= 0 || this->shape.getPosition().x >= kScreenWidth - this->shape.getSize().x){
+      Bounce('S');
     }
 
     if(this->shape.getPosition().y <= 0){
-      this->direction.y = 1;
+      Bounce('T');
     }
+    
   }
-  void bounce(char direction){
+  void Bounce(char direction){
 
     /*
     T = Top/Bottom
@@ -65,11 +62,11 @@ class BallClass : public EntityClass{
     */
     switch (direction) {
     case 'T':
+      this->direction.x =  this->direction.x * -1;
       this->direction.y = this->direction.y * -1;
     case 'S':
       this->direction.x =  this->direction.x * -1;
       break;
-    
     default:
       break;
     }

@@ -1,4 +1,4 @@
-#include <math.h>
+ #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -19,12 +19,22 @@ class Game{
   BallClass ball;
 
   Game() {
-    lives = 1;
+    lives = 3;
     score = 0;
   }
 
   bool IsInsideHitbox(hitbox item, float x, float y){
     return x>item.x1 && x<item.x2 && y>item.y1 && y<item.y2;
+  }
+  
+  char GetWhereIs(hitbox item, hitbox second_item){
+    if (item.y1 >= second_item.y2 || item.y2 <= second_item.y1) {
+      return 'T';
+    } else if(item.x1 >= second_item.x2 || item.x2 <= second_item.x1){
+      return 'S';
+    }
+    
+    return 'N';
   }
 
   bool Collision(hitbox first_item, hitbox second_item){
@@ -62,16 +72,21 @@ class Game{
     sf::RectangleShape player_shape(sf::Vector2f(80,20));
     player_shape.setPosition(360,860);
     player_shape.setFillColor(sf::Color::Green);
-    player.setShape(player_shape);
+    player = PlatformClass(player_shape,1,5);
   }
 
   void initBall(){
     sf::RectangleShape shape(sf::Vector2f(20,20));
     shape.setPosition(sf::Vector2f(player.getShape().getPosition().x + player.getShape().getSize().x/2 - shape.getSize().x/2,player.getShape().getPosition().y - player.getShape().getSize().y - 5));
-    ball = BallClass(1,shape,sf::Vector2i(1,-1));
+    ball = BallClass(1,shape,sf::Vector2i(1,-1),5);
   }
 
   void BallBricksCollision(){
+    sf::Vector2f raycast = sf::Vector2f(ball.getShape().getPosition().x + ball.getDirection().x * ball.getSpeed(), ball.getShape().getPosition().y + ball.getDirection().y * ball.getSpeed());
+    
+    hitbox h_ball_raycast = {raycast.x,raycast.y,
+      raycast.x + ball.getShape().getSize().x,raycast.y + ball.getShape().getSize().y};
+    
     hitbox h_ball = {ball.getShape().getPosition().x,ball.getShape().getPosition().y,
       ball.getShape().getPosition().x + ball.getShape().getSize().x,ball.getShape().getPosition().y + ball.getShape().getSize().y};
     
@@ -80,10 +95,48 @@ class Game{
         hitbox h_brick = {current->data.getShape().getPosition().x,current->data.getShape().getPosition().y,
           current->data.getShape().getPosition().x + current->data.getShape().getSize().x,current->data.getShape().getPosition().y + current->data.getShape().getSize().y};
 
-        if (Collision(h_brick,h_ball)) {
+        if (Collision(h_brick,h_ball_raycast)) {
           current->data.setAlive(false);
+          ball.Bounce(GetWhereIs(h_brick,h_ball));
         }
       }
+    }
+  }
+
+  void PlatformBallCollision(){
+    sf::Vector2f raycast = sf::Vector2f(ball.getShape().getPosition().x + ball.getDirection().x * ball.getSpeed(), ball.getShape().getPosition().y + ball.getDirection().y * ball.getSpeed());
+
+    hitbox h_ball_raycast = {raycast.x,raycast.y,
+      raycast.x + ball.getShape().getSize().x,raycast.y + ball.getShape().getSize().y};
+    
+    hitbox h_ball = {ball.getShape().getPosition().x,ball.getShape().getPosition().y,
+      ball.getShape().getPosition().x + ball.getShape().getSize().x,ball.getShape().getPosition().y + ball.getShape().getSize().y};
+    hitbox h_platform = {player.getShape().getPosition().x,player.getShape().getPosition().y,
+          player.getShape().getPosition().x + player.getShape().getSize().x,player.getShape().getPosition().y + player.getShape().getSize().y};
+     
+    if (Collision(h_platform,h_ball_raycast)) {
+      ball.setDirection(sf::Vector2i(player.getDirection().x, -1));
+    }
+  }
+
+  void RestartPLayer() {
+    initPLatform();
+    initBall();
+  }
+  void RestartLvL(){
+    RestartPLayer();
+    buildBricks();
+  }
+
+  void CheckLoss(){
+    if(ball.getShape().getPosition().y >= kScreenHeight - ball.getShape().getSize().y){
+      lives--;
+      if (lives < 0){
+        RestartLvL();
+      } else {
+        RestartPLayer();
+      }
+      
     }
   }
 };
@@ -106,11 +159,19 @@ int main(){
         window.close();
       }
     }
-    // -------- Input ------------
+    // ---- Input ------------
 
     game.player.MovePlatform();
     game.ball.MoveBall();
+    
+    // ---------------------------
+
+    // ---- Update ---------------
+
     game.BallBricksCollision();
+    game.PlatformBallCollision();
+    game.ball.CheckBoundaries();
+    game.CheckLoss();
 
     // ---------------------------
 
