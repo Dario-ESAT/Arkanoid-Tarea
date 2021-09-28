@@ -50,27 +50,22 @@ class PlatformClass : public EntityClass{
   }
 #pragma endregion
 
-  BallClass *ball;
 
   void MovePlatform(){
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->getShape().getPosition().x > 0) {
 
       this->direction = sf::Vector2i(-1, 0);
-    } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-
-      this->direction = sf::Vector2i(0, 0);
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->getShape().getPosition().x < kScreenWith - this->getShape().getSize().x) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->getShape().getPosition().x < kScreenWith - this->getShape().getSize().x) {
 
       this->direction = sf::Vector2i(1, 0);
-    } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-      
+    } else {
+
       this->direction = sf::Vector2i(0, 0);
     }
 
     sf::Vector2f offset = sf::Vector2f(this->direction.x * this->speed, 0.0f);
+    printf("\n%f", offset.x);
     this->shape.move(offset);
   }
 

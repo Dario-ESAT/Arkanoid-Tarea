@@ -45,31 +45,44 @@ class BrickNode {
     }
 };
 
-class BrickListClass{
+class BrickList{
   private:
   BrickNode* head;
 
+
+
   public:
-  BrickListClass() {
+  BrickList() {
     head = NULL;
   }
-  ~BrickListClass() {};
+  ~BrickList() {};
+
+  BrickNode* getHead() {
+    return this->head;
+  }
+  void setHead(BrickNode* head) {
+    this->head = head;
+  }
 
   void addBrick(Brick data) {
-    BrickNode* newnode = (BrickNode*) malloc(sizeof(BrickNode));
+    BrickNode* newnode = new BrickNode(data);
     
-    newnode->data = data;
+    // printf("\n%d-> x: %2f",data.getId(), data.getShape().getPosition().x);
     newnode->next = head;
-
     head = newnode;
 
   };
 
   void printBricks(sf::RenderWindow *window){
+    static bool x = true;
     for (BrickNode* current = head; current != nullptr; current = current->next) {
+      if (x) {
+        // printf("\n%d-> x: %2f y: %2f",current->data.getId(), current->data.getShape().getPosition().x, current->data.getShape().getPosition().y);
+      }
       
       window->draw(current->data.getShape());
     }
+    x = false;
   }
   
   void printBricksAlive(sf::RenderWindow *window){
