@@ -117,6 +117,8 @@ class Game{
     if (Collision(h_platform,h_ball_raycast)) {
       if (player.getDirection().x != 0) {
         ball.setDirection(sf::Vector2i(player.getDirection().x, -1));
+      } else {
+        ball.setDirection(sf::Vector2i(ball.getDirection().x, -1));
       }
     }
   }
