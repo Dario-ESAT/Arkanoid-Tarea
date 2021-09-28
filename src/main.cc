@@ -76,9 +76,9 @@ class Game{
   }
 
   void initBall(){
-    sf::RectangleShape shape(sf::Vector2f(20,20));
+    sf::RectangleShape shape(sf::Vector2f(10,10));
     shape.setPosition(sf::Vector2f(player.getShape().getPosition().x + player.getShape().getSize().x/2 - shape.getSize().x/2,player.getShape().getPosition().y - player.getShape().getSize().y - 5));
-    ball = BallClass(1,shape,sf::Vector2i(1,-1),5);
+    ball = BallClass(1,shape,sf::Vector2i(1,-1),7);
   }
 
   void BallBricksCollision(){
