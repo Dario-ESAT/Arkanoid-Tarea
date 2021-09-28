@@ -2,6 +2,9 @@
 #define __DEFINITIONS__
 #define kScreenWidth (800)
 #define kScreenHeight (900)
+struct hitbox {
+  float x1,y1,x2,y2;
+};
 
 class EntityClass{
   protected:

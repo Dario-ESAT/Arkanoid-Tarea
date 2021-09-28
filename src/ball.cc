@@ -44,9 +44,7 @@ class BallClass : public EntityClass{
   void setSpeed(float speed) {
   	this->speed = speed;
   }
-
-  void bounce(){
-
+  void CheckBoundaries(){
     if(this->shape.getPosition().x <= 0){
       this->direction.x = 1;
     }
@@ -58,16 +56,33 @@ class BallClass : public EntityClass{
     if(this->shape.getPosition().y <= 0){
       this->direction.y = 1;
     }
+  }
+  void bounce(char direction){
 
-    sf::Vector2f offset = sf::Vector2f(this->direction.x * this->speed, 0.0f);
+    /*
+    T = Top/Bottom
+    S = Sides
+    */
+    switch (direction) {
+    case 'T':
+      this->direction.y = this->direction.y * -1;
+    case 'S':
+      this->direction.x =  this->direction.x * -1;
+      break;
+    
+    default:
+      break;
+    }
+
+  }
+
+  void MoveBall(){
+    
+    sf::Vector2f offset = sf::Vector2f(this->direction.x * this->speed, this->direction.y * this->speed);
     this->shape.move(offset);
+    
   }
 
-  void MoveBall(sf::RenderWindow* window){
-    
-    this->shape.setPosition(sf::Vector2f(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y));
-    
-  }
   void DrawBall(sf::RenderWindow *window){
     window->draw(this->shape);
   }

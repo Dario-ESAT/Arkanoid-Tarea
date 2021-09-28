@@ -24,6 +24,7 @@ class PlatformClass : public EntityClass{
     this->id = id;
     
   };
+  PlatformClass(){};
 #pragma region s-getter
   sf::RectangleShape getShape() {
     return this->shape;
