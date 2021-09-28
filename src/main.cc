@@ -129,6 +129,7 @@ class Game{
   void RestartLvL(){
     RestartPLayer();
     buildBricks();
+    lives = 3;
   }
 
   void CheckLoss(){
