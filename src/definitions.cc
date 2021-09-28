@@ -1,6 +1,6 @@
 #ifndef __DEFINITIONS__
 #define __DEFINITIONS__
-#define kScreenWith (800)
+#define kScreenWidth (800)
 #define kScreenHeight (900)
 
 class EntityClass{

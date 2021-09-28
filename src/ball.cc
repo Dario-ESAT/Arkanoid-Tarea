@@ -14,13 +14,14 @@ class BallClass : public EntityClass{
   float speed;
 
   public:
-  BallClass(int id, float radius, sf::RectangleShape shape, sf::Vector2i direction = sf::Vector2i(0, 0), float speed = 0, bool alive = true){
+  BallClass(int id, sf::RectangleShape shape, sf::Vector2i direction = sf::Vector2i(0, 0), float speed = 0, bool alive = true){
     this->shape = shape;
     this->alive = alive;
     this->speed = speed;
     this->direction = direction;
     this->id = id;
   }
+  BallClass(){};
 
   sf::RectangleShape getShape() {
   	return this->shape;
@@ -46,13 +47,27 @@ class BallClass : public EntityClass{
 
   void bounce(){
 
-  //  if()
+    if(this->shape.getPosition().x <= 0){
+      this->direction.x = 1;
+    }
+    
+    if(this->shape.getPosition().x >= kScreenWidth){
+      this->direction.x = -1;
+    }
 
+    if(this->shape.getPosition().y <= 0){
+      this->direction.y = 1;
+    }
 
     sf::Vector2f offset = sf::Vector2f(this->direction.x * this->speed, 0.0f);
     this->shape.move(offset);
   }
 
+  void MoveBall(sf::RenderWindow* window){
+    
+    this->shape.setPosition(sf::Vector2f(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y));
+    
+  }
   void DrawBall(sf::RenderWindow *window){
     window->draw(this->shape);
   }

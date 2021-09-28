@@ -9,12 +9,26 @@
 #include "ball.cc"
 
 #include <SFML/Graphics.hpp>
+struct hitbox {
+  float x1,y1,x2,y2;
+};
 
 class Game{
   public:
   int lives, score;
   
   BrickList brick_list;
+  
+  BallClass ball;
+  Game(){}
+  bool IsInsideHitbox(hitbox item, float x, float y){
+    return x>item.x1 && x<item.x2 && y>item.y1 && y<item.y2;
+  }
+  //Revisa la colisión con todos los puntos
+  bool Collision(hitbox first_item, hitbox second_item){
+    return IsInsideHitbox(first_item,second_item.x1,second_item.y1)||IsInsideHitbox(first_item,second_item.x2,second_item.y1)||
+        IsInsideHitbox(first_item,second_item.x1,second_item.y2)||IsInsideHitbox(first_item,second_item.x2,second_item.y2);
+  }
 
   void buildBricks(){
 
@@ -29,10 +43,8 @@ class Game{
         shape.setPosition(position);
         Brick building_brick(shape,id);
 
-        // printf("\n%d-> x: %2f",building_brick.getId(), building_brick.getShape().getPosition().x);
         brick_list.addBrick(building_brick);
-        // printf("\n%d-> x: %2f y: %2f",brick_list.getHead()->data.getId(), brick_list.getHead()->data.getShape().getPosition().x, brick_list.getHead()->data.getShape().getPosition().y);
-
+        
         id++;
       }
       position.x = 10;
@@ -40,10 +52,31 @@ class Game{
     }
     
   }
+
+  void initBall(){
+    sf::RectangleShape shape(sf::Vector2f(20,20));
+    shape.setPosition(sf::Vector2f(10,10));
+    ball = BallClass(1,shape,sf::Vector2i(0,0));
+  }
+
+  void BallBricksCollision(){
+    hitbox h_ball = {ball.getShape().getPosition().x,ball.getShape().getPosition().y,
+      ball.getShape().getPosition().x + ball.getShape().getSize().x,ball.getShape().getPosition().y + ball.getShape().getSize().y};
+    
+    for (BrickNode* current = brick_list.getHead(); current != nullptr; current = current->next) {
+      hitbox h_brick = {current->data.getShape().getPosition().x,current->data.getShape().getPosition().y,
+        current->data.getShape().getPosition().x + current->data.getShape().getSize().x,current->data.getShape().getPosition().y + current->data.getShape().getSize().y};
+
+      if (Collision(h_brick,h_ball)) {
+        
+      }
+      
+    }
+  }
 };
 
 int main(){
-  sf::RenderWindow window(sf::VideoMode(kScreenWith, kScreenHeight), "SFML works!");
+  sf::RenderWindow window(sf::VideoMode(kScreenWidth, kScreenHeight), "SFML works!");
   window.setFramerateLimit(30);
   Game game;
   game.buildBricks();
@@ -57,9 +90,9 @@ int main(){
 
   ball_shape.setPosition(380,840);
 //  ball_shape.getFillColor(sf::Color::Red);
-  
+  game.initBall();
+
   PlatformClass player(player_shape,1,5);
-  BallClass ball(2, 6.0f, ball_shape);
   while (window.isOpen()){
 
     sf::Event event;
@@ -68,14 +101,24 @@ int main(){
         window.close();
       }
     }
+    // -------- Input ------------
+
     player.MovePlatform();
+    game.ball.MoveBall(&window);
+    game.BallBricksCollision();
+
+    // ---------------------------
 
     window.clear();
+
     // ---- Draw ------------------------
 
     player.DrawPlatform(&window);
     game.brick_list.printBricks(&window);
+    game.ball.DrawBall(&window);
+    
     // ----------------------------------
+
     window.display();
 
   }

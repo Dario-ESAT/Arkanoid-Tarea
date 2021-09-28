@@ -49,8 +49,6 @@ class BrickList{
   private:
   BrickNode* head;
 
-
-
   public:
   BrickList() {
     head = NULL;
