@@ -98,6 +98,7 @@ class Game{
         if (Collision(h_brick,h_ball_raycast)) {
           current->data.setAlive(false);
           ball.Bounce(GetWhereIs(h_brick,h_ball));
+          break;
         }
       }
     }
