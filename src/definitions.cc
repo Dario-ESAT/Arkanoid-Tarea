@@ -1,32 +1,9 @@
-#ifndef __DEFINITIONS__
-#define __DEFINITIONS__
-#define kScreenWidth (800)
-#define kScreenHeight (900)
-struct hitbox {
-  float x1,y1,x2,y2;
-};
+#include "..\include\definitions.h"
 
-class EntityClass{
-  protected:
-  int id;
-  bool alive;
+void EntityClass::setId(int id) {
+  this->id = id;
+}
 
-  public:
-  int getId() {
-  	return this->id;
-  }
-
-  void setId(int id) {
-  	this->id = id;
-  }
-
-  bool getAlive() {
-  	return this->alive;
-  }
-
-  void setAlive(bool alive) {
-  	this->alive = alive;
-  }
-};
-
-#endif
+bool EntityClass::getAlive() {
+  return this->alive;
+}

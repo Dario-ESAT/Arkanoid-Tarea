@@ -1,50 +1,27 @@
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
+#include "..\include\ball.h"
+#include "..\include\definitions.h"
 
-#include <SFML/Graphics.hpp>
-
-#include "definitions.cc"
-
-class BallClass : public EntityClass{
-  private:
-  sf::RectangleShape shape;
-  sf::Vector2i direction;
-  float speed;
-
-  public:
-  BallClass(int id, sf::RectangleShape shape, sf::Vector2i direction = sf::Vector2i(0, 0), float speed = 0, bool alive = true){
+  BallClass::BallClass(int id, sf::RectangleShape shape, sf::Vector2i direction, float speed, bool alive){
     this->shape = shape;
     this->alive = alive;
     this->speed = speed;
     this->direction = direction;
     this->id = id;
   }
-  BallClass(){};
+  BallClass::BallClass(){};
 
-  sf::RectangleShape getShape() {
-  	return this->shape;
-  }
-  void setShape(sf::RectangleShape shape) {
+  void BallClass::setShape(sf::RectangleShape shape) {
   	this->shape = shape;
   }
 
-  sf::Vector2i getDirection() {
-    return this->direction;
-  }
-  void setDirection(sf::Vector2i direction) {
+  void BallClass::setDirection(sf::Vector2i direction) {
     this->direction = direction;
   }
 
-  float getSpeed() {
-  	return this->speed;
-  }
-
-  void setSpeed(float speed) {
+  void BallClass::setSpeed(float speed) {
   	this->speed = speed;
   }
-  void CheckBoundaries(){
+  void BallClass::CheckBoundaries(){
     if(this->shape.getPosition().x <= 0 || this->shape.getPosition().x >= kScreenWidth - this->shape.getSize().x){
       Bounce('S');
     }
@@ -54,7 +31,7 @@ class BallClass : public EntityClass{
     }
     
   }
-  void Bounce(char direction){
+  void BallClass::Bounce(char direction){
 
     /*
     T = Top/Bottom
@@ -73,16 +50,15 @@ class BallClass : public EntityClass{
 
   }
 
-  void MoveBall(){
+  void BallClass::MoveBall(){
     
     sf::Vector2f offset = sf::Vector2f(this->direction.x * this->speed, this->direction.y * this->speed);
     this->shape.move(offset);
     
   }
 
-  void DrawBall(sf::RenderWindow *window){
+  void BallClass::DrawBall(sf::RenderWindow *window){
     window->draw(this->shape);
   }
 
-};
 
