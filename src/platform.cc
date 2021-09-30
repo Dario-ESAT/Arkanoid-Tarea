@@ -1,6 +1,6 @@
 #include "..\include\platform.h"
 
-PlatformClass::PlatformClass(sf::RectangleShape shape, int id, float speed, sf::Vector2i direction = sf::Vector2i(0,0), bool alive = true){
+PlatformClass::PlatformClass(sf::RectangleShape shape, int id, float speed, sf::Vector2i direction, bool alive){
   this->shape = shape;
   this->alive = alive;
   this->speed = speed;
