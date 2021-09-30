@@ -15,9 +15,7 @@ class Brick : public EntityClass{
 
   Brick();
 
-  sf::RectangleShape getShape() {
-    return this->shape;
-  }
+  sf::RectangleShape getShape();
   void setShape(sf::RectangleShape shape);
 };
 
@@ -37,9 +35,8 @@ class BrickList{
   BrickList();
   ~BrickList();
 
-  BrickNode* getHead() {
-    return this->head;
-  }
+  BrickNode* getHead();
+  
   void setHead(BrickNode* head);
 
   void addBrick(Brick data);

@@ -14,15 +14,11 @@ class EntityClass{
   bool alive;
 
   public:
-  int getId() {
-  	return this->id;
-  }
+  int getId();
 
   void setId(int id);
 
-  bool getAlive() {
-  	return this->alive;
-  }
+  bool getAlive();
 
   void setAlive(bool alive);
 };

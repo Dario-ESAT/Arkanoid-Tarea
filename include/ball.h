@@ -15,21 +15,15 @@ class BallClass : public EntityClass{
   
   BallClass();
 
-  sf::RectangleShape getShape() {
-  	return this->shape;
-  }
+  sf::RectangleShape getShape();
 
   void setShape(sf::RectangleShape shape);
 
-  sf::Vector2i getDirection() {
-    return this->direction;
-  }
+  sf::Vector2i getDirection();
 
   void setDirection(sf::Vector2i direction);
   
-  float getSpeed() {
-  	return this->speed;
-  }
+  float getSpeed();
 
   void setSpeed(float speed);
 

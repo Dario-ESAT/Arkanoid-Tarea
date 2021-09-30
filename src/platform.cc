@@ -57,4 +57,3 @@ void PlatformClass::MovePlatform(){
 void PlatformClass::DrawPlatform(sf::RenderWindow *window){
   window->draw(this->shape);
 }
-

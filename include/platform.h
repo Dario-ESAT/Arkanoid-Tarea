@@ -1,6 +1,7 @@
 #ifndef __PLATFORM_H__
-#define __PLATFORM_H__ 1
+#define __PLATFORM_H__
 #include <SFML/Graphics.hpp>
+
 #include "..\include\definitions.h"
 
 
@@ -11,31 +12,24 @@ class PlatformClass : public EntityClass{
   float speed;
   sf::Vector2i direction;
 
-   public:
+  public:
   PlatformClass(sf::RectangleShape shape, int id, float speed, sf::Vector2i direction = sf::Vector2i(0,0), bool alive = true);
 
   PlatformClass();
 #pragma region s-getter
-  sf::RectangleShape getShape() {
-    return this->shape;
-  }
- 
+  sf::RectangleShape getShape();
+
   void setShape(sf::RectangleShape shape);
 
-  float getSpeed() {
-    return this->speed;
-  }
-  
+  float getSpeed();
+
   void setSpeed(float speed);
 
-  sf::Vector2i getDirection() {
-    return this->direction;
-  }
-  
+  sf::Vector2i getDirection();
+
   void setDirection(sf::Vector2i direction);
 
 #pragma endregion
-
 
   void MovePlatform();
 

@@ -37,6 +37,7 @@
     T = Top/Bottom
     S = Sides
     */
+
     switch (direction) {
     case 'T':
       this->direction.x =  this->direction.x * -1;
@@ -60,5 +61,3 @@
   void BallClass::DrawBall(sf::RenderWindow *window){
     window->draw(this->shape);
   }
-
-
