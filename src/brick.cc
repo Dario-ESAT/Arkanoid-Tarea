@@ -9,9 +9,6 @@ Brick::Brick(sf::RectangleShape shape, int id, bool alive) {
 
 Brick::Brick(){}
 
-void Brick::setShape(sf::RectangleShape shape) {
-  this->shape = shape;
-}
 
 BrickNode::BrickNode(Brick data){
   this->data = data;

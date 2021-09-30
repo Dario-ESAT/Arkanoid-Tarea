@@ -8,15 +8,11 @@
 class Brick : public EntityClass{
   
    protected:
-  sf::RectangleShape shape;
 
    public:
   Brick(sf::RectangleShape shape, int id, bool alive = true);
 
   Brick();
-
-  sf::RectangleShape getShape();
-  void setShape(sf::RectangleShape shape);
 };
 
 class BrickNode {
@@ -25,6 +21,7 @@ class BrickNode {
     BrickNode* next;
 
     BrickNode(Brick data);
+    ~BrickNode();
 };
 
 class BrickList{

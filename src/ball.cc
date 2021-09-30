@@ -10,17 +10,22 @@
   }
   BallClass::BallClass(){};
 
-  void BallClass::setShape(sf::RectangleShape shape) {
-  	this->shape = shape;
-  }
-
   void BallClass::setDirection(sf::Vector2i direction) {
     this->direction = direction;
+  }
+
+  sf::Vector2i BallClass::getDirection() {
+    return this->direction;
   }
 
   void BallClass::setSpeed(float speed) {
   	this->speed = speed;
   }
+
+  float BallClass::getSpeed() {
+  	return this->speed;
+  }
+
   void BallClass::CheckBoundaries(){
     if(this->shape.getPosition().x <= 0 || this->shape.getPosition().x >= kScreenWidth - this->shape.getSize().x){
       Bounce('S');

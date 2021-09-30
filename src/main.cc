@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <time.h>
 
+#include <SFML/Graphics.hpp>
+
 #include "definitions.h"
 #include "brick.h"
 #include "platform.h"
 #include "ball.h"
 #include "game.h"
 
-#include <SFML/Graphics.hpp>
 
 int main(){
   sf::RenderWindow window(sf::VideoMode(kScreenWidth, kScreenHeight), "SFML works!");

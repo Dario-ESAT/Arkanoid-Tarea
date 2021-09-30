@@ -51,14 +51,17 @@ void Game::buildBricks(){
 
 void Game::initPLatform(){
   sf::RectangleShape player_shape(sf::Vector2f(80,20));
+  player_shape.setPosition(360,860);
   player_shape.setFillColor(sf::Color::Green);
   player = PlatformClass(player_shape,1,5);
+  printf("platform-> %f\n",player.getShape().getPosition().y);
 }
 
 void Game::initBall(){
   sf::RectangleShape shape(sf::Vector2f(10,10));
   shape.setPosition(sf::Vector2f(player.getShape().getPosition().x + player.getShape().getSize().x/2 - shape.getSize().x/2,player.getShape().getPosition().y - player.getShape().getSize().y - 5));
   ball = BallClass(1,shape,sf::Vector2i(1,-1),7);
+  printf("ball-> %f\n",ball.getShape().getPosition().y);
 }
 
 void Game::BallBricksCollision(){
@@ -118,7 +121,7 @@ void Game::RestartLvL(){
   RestartPLayer();
   lives = 3;
   for (BrickNode* current = brick_list.getHead(); current != nullptr; current = current->next) {
-    current->data.setAlive(true);
+    current->data.setAlive();
   }
 }
 
@@ -130,7 +133,6 @@ void Game::CheckLoss(){
       } else {
         RestartPLayer();
       }
-      
     }
   }
  

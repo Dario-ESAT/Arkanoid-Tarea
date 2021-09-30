@@ -6,7 +6,6 @@
 
 class BallClass : public EntityClass{
   private:
-  sf::RectangleShape shape;
   sf::Vector2i direction;
   float speed;
 
@@ -14,10 +13,6 @@ class BallClass : public EntityClass{
   BallClass(int id, sf::RectangleShape shape, sf::Vector2i direction = sf::Vector2i(0, 0), float speed = 0, bool alive = true);
   
   BallClass();
-
-  sf::RectangleShape getShape();
-
-  void setShape(sf::RectangleShape shape);
 
   sf::Vector2i getDirection();
 

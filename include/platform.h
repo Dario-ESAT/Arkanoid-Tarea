@@ -1,5 +1,5 @@
 #ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#define __PLATFORM_H__ 1
 #include <SFML/Graphics.hpp>
 
 #include "..\include\definitions.h"
@@ -8,7 +8,6 @@
 class PlatformClass : public EntityClass{
 
    private:
-  sf::RectangleShape shape;
   float speed;
   sf::Vector2i direction;
 
@@ -17,10 +16,6 @@ class PlatformClass : public EntityClass{
 
   PlatformClass();
 #pragma region s-getter
-  sf::RectangleShape getShape();
-
-  void setShape(sf::RectangleShape shape);
-
   float getSpeed();
 
   void setSpeed(float speed);

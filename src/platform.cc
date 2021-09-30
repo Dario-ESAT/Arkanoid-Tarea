@@ -10,13 +10,6 @@ PlatformClass::PlatformClass(sf::RectangleShape shape, int id, float speed, sf::
 };
 PlatformClass::PlatformClass(){};
 #pragma region s-getter
-sf::RectangleShape PlatformClass::getShape() {
-  return this->shape;
-}
-
-void PlatformClass::setShape(sf::RectangleShape shape) {
-  this->shape = shape;
-}
 
 float PlatformClass::getSpeed() {
   return this->speed;
