@@ -30,8 +30,8 @@ void Game::buildBricks(){
   sf::Vector2f size = sf::Vector2f(61,30);
   sf::RectangleShape shape(size);
   int id = 0;
-  for (int i = 0; i < 5; i++) {
-    for (int f = 0; f < 12; f++) {
+  for (int i = 0; i < rows; i++) {
+    for (int f = 0; f < cols; f++) {
       if (f != 0) {
         position.x += size.x + 5;
       }

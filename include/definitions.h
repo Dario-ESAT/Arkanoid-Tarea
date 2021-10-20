@@ -5,6 +5,11 @@
 const int kScreenWidth = 800;
 const int kScreenHeight = 900;
 
+enum BrickNumbers{
+  rows = 5,
+  cols = 12
+};
+
 struct hitbox {
   float x1,y1,x2,y2;
 };
@@ -12,7 +17,6 @@ struct hitbox {
 class EntityClass{
   protected:
   sf::RectangleShape shape;
-  int id;
   bool alive;
 
   public:
@@ -20,10 +24,6 @@ class EntityClass{
   sf::RectangleShape getShape();
 
   void setShape(sf::RectangleShape shape);
-
-  int getId();
-
-  void setId(int id);
 
   bool getAlive();
 

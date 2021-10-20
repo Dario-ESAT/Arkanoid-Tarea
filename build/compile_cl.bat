@@ -11,4 +11,4 @@ cl /nologo /Zi /MDd /EHs /W1 /Fe:main.exe main.obj ball.obj brick.obj definition
 IF EXIST %~dp0*.obj (DEL "%~dp0*.obj")
 IF EXIST %~dp0*.ilk (DEL "%~dp0*.ilk")
 IF EXIST %~dp0*.pdb  (DEL "%~dp0*.pdb")
-IF EXIST %~dp0main.exe  (MOVE "%~dp0main.exe %~dp0..\bin")
+IF EXIST %~dp0main.exe  (MOVE %~dp0main.exe %~dp0..\bin)
