@@ -6,7 +6,6 @@
     this->alive = alive;
     this->speed = speed;
     this->direction = direction;
-    this->id = id;
   }
   BallClass::BallClass(){};
 
